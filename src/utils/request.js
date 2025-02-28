@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useUserStore } from '@/stores'
 import { ElMessage } from 'element-plus'
 
-const baseURL = 'http://localhost:8087'
+const baseURL = 'http://60.204.240.235:8087'
 
 // 自定义配置新建一个实例
 const instance = axios.create({
