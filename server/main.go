@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func main () {
+func main() {
 
 	pkg.DatabaseInit()
 	// pkg.InitRedis()
@@ -16,9 +16,9 @@ func main () {
 	fmt.Println("doto服务器启动中...")
 	r := gin.Default()
 
-		// CORS 配置
+	// CORS 配置
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:5173"},
+		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "OPTIONS", "DELETE"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
@@ -30,7 +30,6 @@ func main () {
 	// // 校验验证码接口
 	// r.POST("/verify_code", pkg.VerifyCode)
 
-	
 	// // 用户注册
 	// r.POST("/register", func(c *gin.Context) {
 	// 	var user pkg.User
@@ -40,18 +39,18 @@ func main () {
 	// 	}
 
 	// 	fmt.Println("手机号:", user.PhoneNumber)
-  //   // 检查手机号是否已存在
+	//   // 检查手机号是否已存在
 	// 	var existingUser pkg.User
-  //   if err := pkg.DB.Where("phone = ?", user.PhoneNumber).First(&existingUser).Error; err == nil {
-  //       c.JSON(400, gin.H{"error": "手机号已被注册"})
-  //       return
-  //   }
+	//   if err := pkg.DB.Where("phone = ?", user.PhoneNumber).First(&existingUser).Error; err == nil {
+	//       c.JSON(400, gin.H{"error": "手机号已被注册"})
+	//       return
+	//   }
 
-  //   // 插入新用户
-  //   if err := pkg.DB.Create(&user).Error; err != nil {
-  //       c.JSON(500, gin.H{"error": "用户注册失败"})
-  //       return
-  //   }
+	//   // 插入新用户
+	//   if err := pkg.DB.Create(&user).Error; err != nil {
+	//       c.JSON(500, gin.H{"error": "用户注册失败"})
+	//       return
+	//   }
 
 	// 	token, err := pkg.GenToken(user.ID, user.Name)
 	// 	if err != nil {
@@ -63,7 +62,7 @@ func main () {
 	// })
 
 	// 用户注册
-	r.POST("/API/register", func (c *gin.Context)  {
+	r.POST("/API/register", func(c *gin.Context) {
 		var user pkg.User
 		if err := c.ShouldBindJSON(&user); err != nil {
 			c.JSON(400, gin.H{"error": err.Error()})
@@ -91,7 +90,7 @@ func main () {
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
 		}
-		
+
 		var existingUser pkg.User
 		if err := pkg.DB.Where("account = ?", user.Account).First(&existingUser).Error; err != nil {
 			c.JSON(401, gin.H{"error": "账号错误"})
@@ -108,7 +107,7 @@ func main () {
 			c.JSON(500, gin.H{"error": "生成 Token 失败"})
 			return
 		}
-		
+
 		var User pkg.User
 		if err := pkg.DB.Where("account = ?", user.Account).First(&User).Error; err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
@@ -151,7 +150,7 @@ func main () {
 			return
 		}
 
-		c.JSON(200, gin.H{"message": "事件查询成功",  "todos": User.Todos})
+		c.JSON(200, gin.H{"message": "事件查询成功", "todos": User.Todos})
 	})
 
 	r.POST("/API/changeUserName", func(c *gin.Context) {
@@ -177,7 +176,7 @@ func main () {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
-		
+
 		c.JSON(200, gin.H{"message": "账号修改成功", "name": newUser.Name})
 	})
 
@@ -194,7 +193,7 @@ func main () {
 			return
 		}
 
-		if err := pkg.DB.Model(&Todo).Update("text", todo.Text ).Error; err != nil {
+		if err := pkg.DB.Model(&Todo).Update("text", todo.Text).Error; err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
@@ -204,7 +203,7 @@ func main () {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
-		
+
 		c.JSON(200, gin.H{"message": "文本修改成功", "name": newTodo.Text})
 
 	})
@@ -222,7 +221,7 @@ func main () {
 			return
 		}
 
-		if err := pkg.DB.Model(&Todo).Update("IsFinish", todo.IsFinish ).Error; err != nil {
+		if err := pkg.DB.Model(&Todo).Update("IsFinish", todo.IsFinish).Error; err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
@@ -232,7 +231,7 @@ func main () {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
-		
+
 		c.JSON(200, gin.H{"message": "文本修改成功", "name": newTodo.IsFinish})
 	})
 
@@ -249,7 +248,7 @@ func main () {
 			return
 		}
 
-		if err := pkg.DB.Model(&Todo).Update("IsImportant", todo.IsImportant ).Error; err != nil {
+		if err := pkg.DB.Model(&Todo).Update("IsImportant", todo.IsImportant).Error; err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
@@ -259,7 +258,7 @@ func main () {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
-		
+
 		c.JSON(200, gin.H{"message": "文本修改成功", "name": newTodo.IsImportant})
 	})
 
@@ -279,7 +278,6 @@ func main () {
 		c.JSON(200, gin.H{"message": "任务删除成功"})
 	})
 
-	
 	r.Run(":8087")
 
 }
