@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onMounted, reactive } from 'vue'
+import { ref, onMounted } from 'vue'
 import { DocumentAdd, Search, CircleCheck, Star, StarFilled } from '@element-plus/icons-vue'
 import {
   userAddTask,
@@ -8,7 +8,6 @@ import {
   changeTaskIsImportant,
   changeTaskText,
   deleteTask,
-  changeUserName,
 } from '@/api/user'
 import { useUserStore } from '../../stores/modules/user'
 import { useRouter } from 'vue-router'
@@ -25,8 +24,6 @@ const tasks = ref([])
 const isPop = ref(false)
 const mouse = ref({ left: 0, top: 0 })
 const delTask = ref()
-const dialogFormVisible = ref(false)
-const formLabelWidth = '120px'
 const router = useRouter()
 
 const addTask = async () => {
@@ -128,16 +125,6 @@ const logout = () => {
 
 const goTologin = () => {
   router.push('/login')
-}
-
-const form = reactive({
-  name: '',
-})
-
-const toChangeUserName = async (name) => {
-  await changeUserName(userStore.user_id, name)
-  dialogFormVisible.value = false
-  userStore.name = name
 }
 </script>
 <template>
