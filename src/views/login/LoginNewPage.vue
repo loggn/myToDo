@@ -1,17 +1,33 @@
 <script setup>
 import { userRegisterService, userLoginService } from '@/api/user'
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../../stores/modules/user'
 const userStore = useUserStore()
 const router = useRouter()
 const isRegister = ref(0)
+const printVisible = ref(true)
 // const from = ref()
 const formModel = ref({
   account: '',
   password: '',
   repassword: '',
 })
+
+// 在页面加载时，监听窗口尺寸变化
+onMounted(() => {
+  window.addEventListener('resize', handleResize)
+  handleResize() // 初始化一次
+})
+
+// 监听窗口大小变化，动态调整菜单显示状态
+const handleResize = () => {
+  if (window.innerWidth < 768) {
+    printVisible.value = false
+  } else {
+    printVisible.value = true
+  }
+}
 
 const rules = {
   account: [
@@ -82,8 +98,8 @@ watch(isRegister, () => {
 </script>
 <template>
   <el-row class="login-page">
-    <el-col :span="8" :offset="4" class="bg"> </el-col>
-    <el-col :span="8" class="form">
+    <el-col :span="printVisible ? 8 : 0" :offset="4" class="bg"> </el-col>
+    <el-col :span="printVisible ? 8 : 16" class="form">
       <el-form v-if="isRegister == 0" :model="formModel" :rules="rules" ref="form">
         <el-form-item><h1>登录</h1></el-form-item>
         <el-form-item prop="account">
