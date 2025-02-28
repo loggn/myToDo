@@ -84,8 +84,8 @@ const toChangeUserName = async (name) => {
                   <el-avatar class="title" Avatar="large" :size="80"></el-avatar>
                 </div>
                 <div class="header-user-text">
-                  <h6>{{ userStore.name }}</h6>
-                  <p>文字状态信息</p>
+                  <h3>{{ userStore.name }}</h3>
+                  <p>每天进步一点点</p>
                 </div>
               </div>
             </template>

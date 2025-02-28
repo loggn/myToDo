@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive } from 'vue'
 import { DocumentAdd, Search, CircleCheck, Star, StarFilled } from '@element-plus/icons-vue'
 import {
   userAddTask,
@@ -8,8 +8,10 @@ import {
   changeTaskIsImportant,
   changeTaskText,
   deleteTask,
+  changeUserName,
 } from '@/api/user'
 import { useUserStore } from '../../stores/modules/user'
+import { useRouter } from 'vue-router'
 
 const drawerShowTask = ref()
 const drawer = ref(false)
@@ -20,10 +22,12 @@ const transparency = ref({
   opacity: 0.5,
 })
 const tasks = ref([])
-
 const isPop = ref(false)
 const mouse = ref({ left: 0, top: 0 })
 const delTask = ref()
+const dialogFormVisible = ref(false)
+const formLabelWidth = '120px'
+const router = useRouter()
 
 const addTask = async () => {
   await userAddTask(inputValue.value.trim(), userStore.user_id)
@@ -114,6 +118,27 @@ const toDeleteTask = async (taskId) => {
   await getTasks() // 删除任务后刷新任务列表
   isPop.value = false // 关闭气泡
 }
+
+const logout = () => {
+  goTologin()
+  userStore.removeName()
+  userStore.removeUserId()
+  userStore.removeToken()
+}
+
+const goTologin = () => {
+  router.push('/login')
+}
+
+const form = reactive({
+  name: '',
+})
+
+const toChangeUserName = async (name) => {
+  await changeUserName(userStore.user_id, name)
+  dialogFormVisible.value = false
+  userStore.name = name
+}
 </script>
 <template>
   <div class="myday-common-layout">
@@ -124,14 +149,25 @@ const toDeleteTask = async (taskId) => {
           <h3>2月10日,星期一</h3>
         </div>
         <div class="myday-header-rigth">
-          <div>
+          <!-- <div>
             <el-icon><TopRight /></el-icon>
           </div>
           <div>
             <el-icon><Opportunity /></el-icon>
+          </div> -->
+          <el-popover placement="bottom" :width="90" trigger="click">
+          
+          <template #reference>
+          <el-icon><More /></el-icon>
+        </template>
+          <template #default>
+              <ul>
+                <li @click="logout">退出登录</li>
+                <li>功能待开发...</li>
+              </ul>
+            </template>
+          </el-popover>
           </div>
-          <div>...</div>
-        </div>
       </el-header>
       <el-scrollbar>
         <el-main class="myday-body">
