@@ -91,8 +91,9 @@ const toChangeUserName = async (name) => {
             </template>
             <template #default>
               <ul>
-                <li @click="logout">注销登录</li>
+                <li @click="logout">退出登录</li>
                 <li @click="dialogFormVisible = true">更改昵称</li>
+                <li>账号设置</li>
                 <el-dialog v-model="dialogFormVisible" title="更改昵称" width="500">
                   <el-form :model="form">
                     <el-form-item label="新昵称" :label-width="formLabelWidth">
