@@ -151,15 +151,15 @@ const toPage = (toUrl) => {
                 <li @click="logout">退出登录</li>
                 <li>功能待开发...</li>
               </ul>
-            </template>
+        </template>
         </el-popover>
           <!-- <div>
             <el-icon><Opportunity /></el-icon>
           </div> -->
           <el-popover placement="bottom" :width="90" trigger="click">
           <template #reference>
-          <el-icon><More /></el-icon>
-        </template>
+           <el-icon><More /></el-icon>
+          </template>
           <template #default>
               <ul>
                 <li @click="toPage('/article/myday')">myday</li>
