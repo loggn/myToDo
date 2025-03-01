@@ -45,14 +45,14 @@ const rules = {
   ],
   repassword: [
     {
-      validator: (value, callback) => {
+      validator: (rules, value, callback) => {
         if (value !== formModel.value.password) {
           callback(new Error('两次输入的密码不一致'))
         } else {
           callback()
         }
       },
-      trigger: 'change',
+      trigger: 'blur',
     },
   ],
 }
