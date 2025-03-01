@@ -24,7 +24,7 @@ jobs:
             echo "当前目录：" $(pwd)
             cd ../myToDo/myToDo  # 切换到项目目录
             git pull origin main      # 拉取最新代码
-            nohup pnpm dev &   # 启动前端服务
+            nohup pnpm build &   # 启动前端服务
             cd server
             nohup go run main.go &  # 启动后端服务
             
