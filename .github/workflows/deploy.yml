@@ -19,6 +19,7 @@ jobs:
           key: ${{ secrets.HUAWEI_CLOUD }}
           port: 22
           script: |
+            export PATH=$PATH:/usr/local/go/bin  # 手动添加 Go 环境
             echo "当前主机名：" $(hostname)  # 确保连接的是你的服务器
             echo "当前用户：" $(whoami)
             echo "当前目录：" $(pwd)
