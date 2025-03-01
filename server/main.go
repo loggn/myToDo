@@ -99,6 +99,14 @@ func main() {
 			return
 		}
 
+		if user.Account == "" {
+			c.JSON(400, gin.H{"error": "账号不得为空"})
+		}
+
+		if user.Password == "" {
+			c.JSON(400, gin.H{"error": "密码不得为空"})
+		}
+
 		var existingUser pkg.User
 		if err := pkg.DB.Where("account = ?", user.Account).First(&existingUser).Error; err != nil {
 			c.JSON(401, gin.H{"error": "账号错误"})
