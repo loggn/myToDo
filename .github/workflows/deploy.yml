@@ -22,3 +22,4 @@ jobs:
             nohup pnpm dev &   # 启动前端服务
             cd server
             nohup go run main.go &  # 启动后端服务
+            
