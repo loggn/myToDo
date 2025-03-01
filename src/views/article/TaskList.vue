@@ -1,7 +1,16 @@
-<script>
+<script  setup>
 import { useRouter } from 'vue-router'
+import { useUserStore } from '../../stores/modules/user'
 
 const router = useRouter()
+const userStore = useUserStore()
+
+const logout = () => {
+  goTologin()
+  userStore.removeName()
+  userStore.removeUserId()
+  userStore.removeToken()
+}
 
 const goTologin = () => {
   router.push('/login')
