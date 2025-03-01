@@ -69,6 +69,14 @@ func main() {
 			return
 		}
 
+		if user.Account == "" {
+			c.JSON(400, gin.H{"error": "账号不得为空"})
+		}
+
+		if user.Password == "" {
+			c.JSON(400, gin.H{"error": "密码不得为空"})
+		}
+
 		var existingUser pkg.User
 		if err := pkg.DB.Where("account = ?", user.Account).First(&existingUser).Error; err == nil {
 			c.JSON(400, gin.H{"error": "账号已存在"})
@@ -276,6 +284,21 @@ func main() {
 		}
 
 		c.JSON(200, gin.H{"message": "任务删除成功"})
+	})
+
+	r.POST("/API/deleteUser", func(c *gin.Context) {
+		var user pkg.User
+		if err := c.ShouldBindJSON(&user); err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+
+		if err := pkg.DB.Delete(&user, user.ID).Error; err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(200, gin.H{"message": "用户删除成功"})
 	})
 
 	r.Run(":8087")
