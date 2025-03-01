@@ -24,12 +24,12 @@ jobs:
             echo "当前目录：" $(pwd)
             cd ../myToDo/myToDo  # 切换到项目目录
             git pull origin main      # 拉取最新代码
-            nohup pnpm build &   # 启动前端服务
+            pnpm build    # 启动前端服务
             sudo cp -r dist/* /var/www/html/new_project/
             cd server
-            nohup go build -o myserver main.go &  # 启动后端服务
+            go build -o myserver main.go   # 启动后端服务
             pkill -f myserver || true  # 杀死之前的进程，避免端口占用
-            nohup ./myserver > backend.log 2>&1 &  # 让服务后台运行
+            nohup ./myserver > backend.log 2>&1 & disown # 让服务后台运行
 
 
             
