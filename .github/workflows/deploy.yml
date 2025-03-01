@@ -28,7 +28,7 @@ jobs:
             sudo cp -r dist/* /var/www/html/new_project/
             cd server
             echo "当前目录：" $(pwd)
-            go run main.go
+            nohup go run main.go &
             # go build -o myserver main.go   # 启动后端服务
             # pkill -f myserver || true  # 杀死之前的进程，避免端口占用
             # echo "当前目录：" $(pwd)
