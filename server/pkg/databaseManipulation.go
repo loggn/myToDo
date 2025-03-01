@@ -62,18 +62,18 @@ var DB *gorm.DB
 
 type User struct {
 	ID       string `gorm:"primaryKey;type:TEXT" json:"id"`
-	Name     string `json:"name"` 
+	Name     string `json:"name"`
 	Account  string `json:"account"`
 	Password string `json:"password"`
 	Todos    []Todo `gorm:"foreignKey:UserID"`
 }
 
 type Todo struct {
-	ID          uint   `gorm:"primaryKey" json:"id"`          // 任务唯一标识
-	UserID      string `gorm:"index;not null;constraint:OnDelete:CASCADE" json:"user_id"`  // 关联用户的ID
-	Text        string `json:"text"`                          // 任务内容
-	IsFinish    bool   `json:"isFinish"`                      // 任务是否完成
-	IsImportant bool   `json:"isImportant"`                   // 任务是否重要
+	ID          uint   `gorm:"primaryKey" json:"id"`                                      // 任务唯一标识
+	UserID      string `gorm:"index;not null;constraint:OnDelete:CASCADE" json:"user_id"` // 关联用户的ID
+	Text        string `json:"text"`                                                      // 任务内容
+	IsFinish    bool   `json:"isFinish"`                                                  // 任务是否完成
+	IsImportant bool   `json:"isImportant"`                                               // 任务是否重要
 }
 
 // BeforeCreate 钩子：自动填充 ID 和 Name 字段
@@ -96,6 +96,8 @@ func DatabaseInit() {
 		fmt.Println("连接数据库失败：", err)
 		return
 	}
+
+	DB.Exec("PRAGMA foreign_keys = ON;")
 
 	// 自动迁移数据库结构
 	err = DB.AutoMigrate(&User{}, &Todo{})
