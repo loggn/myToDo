@@ -293,7 +293,12 @@ func main() {
 			return
 		}
 
-		if err := pkg.DB.Delete(&user, user.ID).Error; err != nil {
+		if user.ID == "" {
+			c.JSON(400, gin.H{"error": "ID 不能为空"})
+			return
+		}
+
+		if err := pkg.DB.Where("id = ?", user.ID).Delete(&pkg.User{}).Error; err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
