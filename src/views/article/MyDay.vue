@@ -126,6 +126,10 @@ const logout = () => {
 const goTologin = () => {
   router.push('/login')
 }
+
+const toPage = (toUrl) => {
+  router.push(toUrl)
+}
 </script>
 <template>
   <div class="myday-common-layout">
@@ -136,21 +140,33 @@ const goTologin = () => {
           <h3>2月10日,星期一</h3>
         </div>
         <div class="myday-header-rigth">
-          <!-- <div>
+          <el-popover placement="bottom" :width="90" trigger="click">
+            <template #reference>
+          <div>
             <el-icon><TopRight /></el-icon>
           </div>
-          <div>
+        </template>
+        <template #default>
+              <ul>
+                <li @click="logout">退出登录</li>
+                <li>功能待开发...</li>
+              </ul>
+            </template>
+        </el-popover>
+          <!-- <div>
             <el-icon><Opportunity /></el-icon>
           </div> -->
           <el-popover placement="bottom" :width="90" trigger="click">
-          
           <template #reference>
           <el-icon><More /></el-icon>
         </template>
           <template #default>
               <ul>
-                <li @click="logout">退出登录</li>
-                <li>功能待开发...</li>
+                <li @click="toPage('/article/myday')">myday</li>
+                <li @click="toPage('/article/ImportantToDo')">重要</li>
+                <li @click="toPage('/article/TaskInPlan')">计划内</li>
+                <li @click="toPage('/article/AssignedToMe')">已分配给我</li>
+                <li @click="toPage('/article/TaskList')">已完成</li>
               </ul>
             </template>
           </el-popover>
