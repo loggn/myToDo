@@ -1,9 +1,10 @@
 import request from '@/utils/request'
 
-export const userRegisterService = (account, password) => {
+export const userRegisterService = (account, password, repassword) => {
   return request.post('/API/register', {
     account: account,
     password: password,
+    repassword: repassword
   })
 }
 

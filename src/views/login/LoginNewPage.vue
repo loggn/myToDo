@@ -7,7 +7,6 @@ const userStore = useUserStore()
 const router = useRouter()
 const isRegister = ref(0)
 const printVisible = ref(true)
-// const from = ref()
 const formModel = ref({
   account: '',
   password: '',
@@ -33,7 +32,7 @@ const rules = {
   account: [
     { required: true, message: '账号不得为空', trigger: 'blur' },
     {
-      min: 5,
+      min: 6,
       max: 10,
       message: '请输入正确账号',
       trigger: 'blur',
@@ -63,7 +62,7 @@ const goToHome = () => {
 
 const register = async () => {
   // 调用注册接口，获取返回值
-  const response = await userRegisterService(formModel.value.account, formModel.value.password)
+  const response = await userRegisterService(formModel.value.account, formModel.value.password, formModel.value.repassword)
 
   if (response.data.message) {
     ElMessage.success('注册成功')

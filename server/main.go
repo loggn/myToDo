@@ -62,19 +62,44 @@ func main() {
 	// })
 
 	// 用户注册
+
+	type registerUser struct {
+		Account    string `json:"account"`
+		Password   string `json:"password"`
+		Repassword string `json:"repassword"`
+	}
+
 	r.POST("/API/register", func(c *gin.Context) {
-		var user pkg.User
+		var user registerUser
 		if err := c.ShouldBindJSON(&user); err != nil {
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
 		}
 
 		if user.Account == "" {
+
 			c.JSON(400, gin.H{"error": "账号不得为空"})
+			return
+		}
+
+		if len(user.Account) < 6 || len(user.Account) > 10 {
+			c.JSON(400, gin.H{"error": "账号长度应为6~10"})
+			return
 		}
 
 		if user.Password == "" {
 			c.JSON(400, gin.H{"error": "密码不得为空"})
+			return
+		}
+
+		if len(user.Password) < 6 || len(user.Password) > 15 {
+			c.JSON(400, gin.H{"error": "密码长度应为6~15"})
+			return
+		}
+
+		if user.Repassword != user.Password {
+			c.JSON(400, gin.H{"error": "两次输入密码不一致"})
+			return
 		}
 
 		var existingUser pkg.User
@@ -83,12 +108,15 @@ func main() {
 			return
 		}
 
-		if err := pkg.DB.Create(&user).Error; err != nil {
+		var newUser pkg.User
+		newUser.Account = user.Account
+		newUser.Password = user.Password
+		if err := pkg.DB.Create(&newUser).Error; err != nil {
 			c.JSON(500, gin.H{"error": "用户注册失败"})
 			return
 		}
 
-		c.JSON(200, gin.H{"message": "注册成功", "user": user})
+		c.JSON(200, gin.H{"message": "注册成功", "user": newUser})
 	})
 
 	// 用户登录
@@ -101,10 +129,12 @@ func main() {
 
 		if user.Account == "" {
 			c.JSON(400, gin.H{"error": "账号不得为空"})
+			return
 		}
 
 		if user.Password == "" {
 			c.JSON(400, gin.H{"error": "密码不得为空"})
+			return
 		}
 
 		var existingUser pkg.User
@@ -315,5 +345,4 @@ func main() {
 	})
 
 	r.Run(":8087")
-
 }
