@@ -32,3 +32,4 @@ jobs:
             # nohup go run main.go &
             nohup go build -o myserver main.go &  # 打包后端服务
             sudo systemctl restart myserver #重新启动后端服务
+            
