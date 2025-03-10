@@ -352,6 +352,12 @@ const toPage = (toUrl) => {
 }
 
 @media screen and (max-width: 768px) {
-  
+  .myday-header {
+    margin: 8px;
+  }
+
+  .myday-header-rigth {
+    width: 100px;
+  }
 }
 </style>
