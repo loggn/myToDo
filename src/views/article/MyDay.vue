@@ -207,7 +207,6 @@ const toPage = (toUrl) => {
             </div>
           </div>
           <div class="myday-noTaskList" v-else>
-            <el-empty :image-size="200" description="没有任务"></el-empty>
           </div>
         </el-main>
       </el-scrollbar>
@@ -300,8 +299,8 @@ const toPage = (toUrl) => {
 .myday-common-layout {
   display: flex;
   background-image: url('../../assets/【哲风壁纸】可爱女生-室内坐姿.png');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   height: 100vh;
   min-width: 400px;
 }
@@ -350,5 +349,9 @@ const toPage = (toUrl) => {
   border-radius: 4px;
   background: var(--el-color-primary-light-9);
   color: var(--el-color-primary);
+}
+
+@media screen and (max-width: 768px) {
+  
 }
 </style>
