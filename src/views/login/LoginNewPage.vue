@@ -213,7 +213,6 @@ watch(isRegister, () => {
 
   .form {
     border-radius: 20px; /* 调整边框圆角 */
-    background-color: #afabab;
     background-color: rgba(250, 250, 250, 0.6);
   }
 }
