@@ -97,7 +97,7 @@ watch(isRegister, () => {
 </script>
 <template>
   <el-row class="login-page">
-    <el-col :span="printVisible ? 8 : 0" :offset="4" class="bg"> </el-col>
+    <el-col :span="printVisible ? 8 : 0" class="bg"> </el-col>
     <el-col :span="printVisible ? 8 : 16" class="form">
       <el-form v-if="isRegister == 0" :model="formModel" :rules="rules" ref="form">
         <el-form-item><h1>登录</h1></el-form-item>
@@ -170,23 +170,29 @@ watch(isRegister, () => {
 <style scoped>
 .login-page {
   height: 100vh;
+  min-width: 350px;
+  display: flex;
+  justify-content: center; 
   align-items: center;
-  background-color: #afabab;
+  background-color: #9cc6e3;
 }
 .bg {
   height: 50vh;
-  background-image: url('../../assets/红色信仰.png');
-  background-size: 140% 120%;
-  background-position: -100px 20px;
+  background-image: url('../../assets/【哲风壁纸】笑嘻嘻-美女.png');
+  background-size: cover;
+  background-position: center;
   border-radius: 20px 0 0 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 .form {
+  min-width: 350px;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 50vh;
   background-color: #fff;
   border-radius: 0 20px 20px 0;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 
   .button {
     width: 100%;
@@ -196,6 +202,19 @@ watch(isRegister, () => {
     width: 100%;
     display: flex;
     justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .login-page {
+    background-image: url(../../assets/0927be6b971a98f94aeefca333c26343.png);
+    background-size: 100% 100%;
+  }
+
+  .form {
+    border-radius: 20px; /* 调整边框圆角 */
+    background-color: #afabab;
+    background-color: rgba(250, 250, 250, 0.6);
   }
 }
 </style>
