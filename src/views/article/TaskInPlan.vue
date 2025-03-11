@@ -72,8 +72,8 @@ const toPage = (toUrl) => {
 .TaskInPlan-common-layout {
   display: flex;
   background-image: url('../../assets/背景4.jpg');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   height: 100vh;
 }
 .TaskInPlan-header {

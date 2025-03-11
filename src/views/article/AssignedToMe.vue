@@ -72,8 +72,8 @@ const toPage = (toUrl) => {
 .AssignedToMe-common-layout {
   display: flex;
   background-image: url('../../assets/背景1.jpg');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   height: 100vh;
 }
 .AssignedToMe-header {

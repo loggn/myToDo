@@ -71,9 +71,9 @@ const toPage = (toUrl) => {
 <style>
 .Task-common-layout {
   display: flex;
-  background-image: url('../../assets/新背景1.jpg');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  background-image: url('../../assets/【哲风壁纸】完美世界-火灵儿.png');
+  background-size: cover;
+  background-position: center;
   height: 100vh;
 }
 .Task-header {
