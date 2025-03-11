@@ -89,8 +89,7 @@ const toPage = (toUrl) => {
 .AssignedToMe-header {
   display: flex;
   justify-content: space-between;
-  margin: 35px;
-  height: 135px;
+  margin: 25px;
 }
 .AssignedToMe-header-left {
   display: flex;
@@ -108,4 +107,13 @@ const toPage = (toUrl) => {
   width: 180px;
 }
 
+@media screen and (max-width: 768px) {
+  .AssignedToMe-header {
+    margin: 0px;
+  }
+
+  .AssignedToMe-header-rigth {
+    width: 100px;
+  }
+}
 </style>

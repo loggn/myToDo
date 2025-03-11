@@ -1,10 +1,14 @@
 <script  setup>
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../../stores/modules/user'
+import { computed, ref, onMounted } from 'vue'
+import { userGetTask } from '@/api/user'
 
 const router = useRouter()
 const userStore = useUserStore()
-
+const newStyle = ref({
+  opacity: 0.5,
+})
 const logout = () => {
   goTologin()
   userStore.removeName()
@@ -19,6 +23,26 @@ const goTologin = () => {
 const toPage = (toUrl) => {
   router.push(toUrl)
 }
+
+const tasks = ref([])
+
+const getTasks = async () => {
+  const res = await userGetTask(userStore.user_id)
+  tasks.value = res.data.todos.map((todo) => ({
+    id: todo.id,
+    text: todo.text,
+    isFinish: todo.isFinish,
+    isImportant: todo.isImportant,
+  }))
+}
+
+onMounted(() => {
+  getTasks()
+})
+
+const ImportantTasks = computed(() => {
+  return tasks.value.filter(task => task.isImportant)
+})
 </script>
 <template>
   <div class="Import-common-layout">
@@ -63,12 +87,27 @@ const toPage = (toUrl) => {
           </el-popover>
         </div>
       </el-header>
-      <el-main class="Import-body">任务列表</el-main>
-      <el-footer class="Import-foot">添加任务</el-footer>
+      <el-main class="Import-body">
+        <div v-for="(task, index) in ImportantTasks"
+        :key="index"
+        class="task-item"
+        >
+          <h3>
+            {{ task.text }}
+          </h3>
+        </div>
+      </el-main>
+      <el-footer class="Import-foot">
+        <el-input 
+          :style="newStyle"
+          placeholder="搜索任务"
+        >
+        </el-input>
+      </el-footer>
     </el-container>
   </div>
 </template>
-<style>
+<style scoped>
 .Import-common-layout {
   display: flex;
   background-image: url('../../assets/【哲风壁纸】咖啡馆-咖啡馆场景.png');
@@ -79,8 +118,7 @@ const toPage = (toUrl) => {
 .Import-header {
   display: flex;
   justify-content: space-between;
-  margin: 35px;
-  height: 135px;
+  margin: 25px;
 }
 .Import-header-left {
   display: flex;
@@ -96,5 +134,25 @@ const toPage = (toUrl) => {
   font-size: 25px;
   color: white;
   width: 180px;
+}
+
+.task-item {
+  margin: 8px;
+  display: flex;
+  align-items: center;
+  background-color: #f9f9f98b;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (max-width: 768px) {
+  .Import-header {
+    margin: 0px;
+  }
+
+  .Import-header-rigth {
+    width: 100px;
+  }
 }
 </style>

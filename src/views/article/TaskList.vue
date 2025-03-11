@@ -6,6 +6,9 @@ import { userGetTask } from '@/api/user'
 
 const router = useRouter()
 const userStore = useUserStore()
+const newStyle = ref({
+  opacity: 0.5,
+})
 
 const logout = () => {
   goTologin()
@@ -97,11 +100,17 @@ const finishedTasks = computed(() => {
           </h3>
         </div>
       </el-main>
-      <el-footer class="Task-foot"></el-footer>
+      <el-footer class="Task-foot">
+        <el-input 
+          :style="newStyle"
+          placeholder="搜索任务"
+        >
+        </el-input>
+      </el-footer>
     </el-container>
   </div>
 </template>
-<style>
+<style scoped>
 .Task-common-layout {
   display: flex;
   background-image: url('../../assets/【哲风壁纸】完美世界-火灵儿.png');
@@ -112,8 +121,7 @@ const finishedTasks = computed(() => {
 .Task-header {
   display: flex;
   justify-content: space-between;
-  margin: 35px;
-  height: 135px;
+  margin: 25px;
 }
 .Task-header-left {
   display: flex;

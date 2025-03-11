@@ -1,10 +1,13 @@
 <script  setup>
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../../stores/modules/user'
+import { ref } from 'vue'
 
 const router = useRouter()
 const userStore = useUserStore()
-
+const newStyle = ref({
+  opacity: 0.5,
+})
 const logout = () => {
   goTologin()
   userStore.removeName()
@@ -64,11 +67,17 @@ const toPage = (toUrl) => {
         </div>
       </el-header>
       <el-main class="TaskInPlan-body">任务列表</el-main>
-      <el-footer class="TaskInPlan-foot">添加任务</el-footer>
+      <el-footer class="TaskInPlan-foot">        
+        <el-input 
+          :style="newStyle"
+          placeholder="搜索任务"
+        >
+        </el-input>
+      </el-footer>
     </el-container>
   </div>
 </template>
-<style>
+<style scoped>
 .TaskInPlan-common-layout {
   display: flex;
   background-image: url('../../assets/【哲风壁纸】二次元-动漫.png');
@@ -79,8 +88,7 @@ const toPage = (toUrl) => {
 .TaskInPlan-header {
   display: flex;
   justify-content: space-between;
-  margin: 35px;
-  height: 135px;
+  margin: 25px;
 }
 .TaskInPlan-header-left {
   display: flex;
@@ -96,5 +104,15 @@ const toPage = (toUrl) => {
   font-size: 25px;
   color: white;
   width: 180px;
+}
+
+@media screen and (max-width: 768px) {
+  .TaskInPlan-header {
+    margin: 0px;
+  }
+
+  .TaskInPlan-header-rigth {
+    width: 100px;
+  }
 }
 </style>
