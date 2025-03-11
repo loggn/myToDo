@@ -57,7 +57,7 @@ const toPage = (toUrl) => {
                 <li @click="toPage('/article/ImportantToDo')">重要</li>
                 <li @click="toPage('/article/TaskInPlan')">计划内</li>
                 <li @click="toPage('/article/AssignedToMe')">已分配给我</li>
-                <li @click="toPage('/article/TaskList')">已完成</li>
+                <li @click="toPage('/article/TaskList')">历史任务</li>
               </ul>
             </template>
           </el-popover>

@@ -140,7 +140,7 @@ const toChangeUserName = async (name) => {
         </el-menu-item>
         <el-menu-item index="/article/TaskList">
           <el-icon><Collection /></el-icon>
-          <span>已完成</span>
+          <span>历史任务</span>
         </el-menu-item>
       </el-menu>
     </el-col>
