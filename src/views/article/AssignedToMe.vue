@@ -1,9 +1,13 @@
 <script  setup>
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../../stores/modules/user'
+import { ref } from 'vue'
 
 const router = useRouter()
 const userStore = useUserStore()
+const newStyle = ref({
+  opacity: 0.5,
+})
 
 const logout = () => {
   goTologin()
@@ -64,14 +68,20 @@ const toPage = (toUrl) => {
         </div>
       </el-header>
       <el-main class="AssignedToMe-body">任务列表</el-main>
-      <el-footer class="AssignedToMe-foot">添加任务</el-footer>
+      <el-footer class="AssignedToMe-foot">
+        <el-input 
+        :style="newStyle"
+        placeholder="搜索任务"
+        >
+        </el-input>
+      </el-footer>
     </el-container>
   </div>
 </template>
-<style>
+<style scoped>
 .AssignedToMe-common-layout {
   display: flex;
-  background-image: url('../../assets/背景1.jpg');
+  background-image: url('../../assets/【哲风壁纸】写真-封疆疆.png');
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -97,4 +107,5 @@ const toPage = (toUrl) => {
   color: white;
   width: 180px;
 }
+
 </style>

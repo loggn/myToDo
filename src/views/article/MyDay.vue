@@ -236,7 +236,7 @@ const toPage = (toUrl) => {
     <div @click="toDeleteTask(delTask.id)">删除任务</div>
   </div>
 </template>
-<style>
+<style scoped>
 .pop {
   position: absolute;
   background: white;

@@ -71,7 +71,7 @@ const toPage = (toUrl) => {
 <style>
 .TaskInPlan-common-layout {
   display: flex;
-  background-image: url('../../assets/背景4.jpg');
+  background-image: url('../../assets/【哲风壁纸】二次元-动漫.png');
   background-size: cover;
   background-position: center;
   height: 100vh;

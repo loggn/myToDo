@@ -71,7 +71,7 @@ const toPage = (toUrl) => {
 <style>
 .Import-common-layout {
   display: flex;
-  background-image: url('../../assets/背景3.jpg');
+  background-image: url('../../assets/【哲风壁纸】咖啡馆-咖啡馆场景.png');
   background-size: cover;
   background-position: center;
   height: 100vh;
