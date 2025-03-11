@@ -216,4 +216,10 @@ watch(isRegister, () => {
     background-color: rgba(250, 250, 250, 0.6);
   }
 }
+
+@media screen and (max-height: 600px){
+  .form {
+    height: 90vh;
+  }
+}
 </style>
