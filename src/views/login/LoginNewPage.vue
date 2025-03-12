@@ -13,20 +13,20 @@ const formModel = ref({
   repassword: '',
 })
 
-// 在页面加载时，监听窗口尺寸变化
-onMounted(() => {
-  window.addEventListener('resize', handleResize)
-  handleResize() // 初始化一次
-})
+// // 在页面加载时，监听窗口尺寸变化
+// onMounted(() => {
+//   window.addEventListener('resize', handleResize)
+//   handleResize() // 初始化一次
+// })
 
-// 监听窗口大小变化，动态调整菜单显示状态
-const handleResize = () => {
-  if (window.innerWidth < 768) {
-    printVisible.value = false
-  } else {
-    printVisible.value = true
-  }
-}
+// // 监听窗口大小变化，动态调整菜单显示状态
+// const handleResize = () => {
+//   if (window.innerWidth < 768) {
+//     printVisible.value = false
+//   } else {
+//     printVisible.value = true
+//   }
+// }
 
 const rules = {
   account: [
@@ -97,8 +97,8 @@ watch(isRegister, () => {
 </script>
 <template>
   <el-row class="login-page">
-    <el-col :span="printVisible ? 8 : 0" class="bg"> </el-col>
-    <el-col :span="printVisible ? 8 : 16" class="form">
+    <el-col :span="8" class="bg"> </el-col>
+    <el-col :span="8" class="form">
       <el-form v-if="isRegister == 0" :model="formModel" :rules="rules" ref="form">
         <el-form-item><h1>登录</h1></el-form-item>
         <el-form-item prop="account">
@@ -171,12 +171,15 @@ watch(isRegister, () => {
 .login-page {
   height: 100vh;
   min-width: 350px;
+  min-height: 350px;
   display: flex;
   justify-content: center; 
   align-items: center;
   background-color: #9cc6e3;
 }
 .bg {
+  min-width: 350px;
+  min-height: 350px;
   height: 50vh;
   background-image: url('../../assets/【哲风壁纸】笑嘻嘻-美女.png');
   background-size: cover;
@@ -186,6 +189,7 @@ watch(isRegister, () => {
 }
 .form {
   min-width: 350px;
+  min-height: 350px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -211,6 +215,10 @@ watch(isRegister, () => {
     background-size: 100% 100%;
   }
 
+  .bg {
+    display: none;
+  }
+
   .form {
     border-radius: 20px; /* 调整边框圆角 */
     background-color: rgba(250, 250, 250, 0.6);
@@ -219,6 +227,10 @@ watch(isRegister, () => {
 
 @media screen and (max-height: 600px){
   .form {
+    height: 90vh;
+  }
+
+  .bg {
     height: 90vh;
   }
 }
