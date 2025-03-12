@@ -13,21 +13,6 @@ const formModel = ref({
   repassword: '',
 })
 
-// // 在页面加载时，监听窗口尺寸变化
-// onMounted(() => {
-//   window.addEventListener('resize', handleResize)
-//   handleResize() // 初始化一次
-// })
-
-// // 监听窗口大小变化，动态调整菜单显示状态
-// const handleResize = () => {
-//   if (window.innerWidth < 768) {
-//     printVisible.value = false
-//   } else {
-//     printVisible.value = true
-//   }
-// }
-
 const rules = {
   account: [
     { required: true, message: '账号不得为空', trigger: 'blur' },
