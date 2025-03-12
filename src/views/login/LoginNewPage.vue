@@ -1,12 +1,11 @@
 <script setup>
 import { userRegisterService, userLoginService } from '@/api/user'
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../../stores/modules/user'
 const userStore = useUserStore()
 const router = useRouter()
 const isRegister = ref(0)
-const printVisible = ref(true)
 const formModel = ref({
   account: '',
   password: '',
