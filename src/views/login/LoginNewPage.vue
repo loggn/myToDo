@@ -164,7 +164,7 @@ watch(isRegister, () => {
 .bg {
   min-width: 350px;
   min-height: 350px;
-  height: 50vh;
+  height: 70vh;
   background-image: url('../../assets/【哲风壁纸】笑嘻嘻-美女.png');
   background-size: cover;
   background-position: center;
@@ -177,7 +177,7 @@ watch(isRegister, () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50vh;
+  height: 70vh;
   background-color: #fff;
   border-radius: 0 20px 20px 0;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
