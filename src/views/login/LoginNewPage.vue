@@ -3,9 +3,14 @@ import { userRegisterService, userLoginService } from '@/api/user'
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../../stores/modules/user'
+import { User, Lock } from '@element-plus/icons-vue'
+
+
 const userStore = useUserStore()
 const router = useRouter()
-const isRegister = ref(0)
+const isPage = ref(0)
+const registerForm = ref(null)
+
 const formModel = ref({
   account: '',
   password: '',
@@ -40,42 +45,53 @@ const rules = {
   ],
 }
 
-const goToHome = () => {
-  router.push('/')
-}
-
 const register = async () => {
-  // 调用注册接口，获取返回值
-  const response = await userRegisterService(formModel.value.account, formModel.value.password, formModel.value.repassword)
+  if (!registerForm.value) {
+    ElMessage.error('表单未正确绑定')
+    return
+  }
+
+  
+  const valid = await registerForm.value.validate()
+  if (!valid) {
+    ElMessage.error('请正确填写注册信息')
+    return
+  }
+  const response = await userRegisterService(
+    formModel.value.account,
+    formModel.value.password,
+    formModel.value.repassword
+  )
 
   if (response.data.message) {
     ElMessage.success('注册成功')
-    isRegister.value = 0
-  } else {
-    ElMessage.error(`注册失败: ${response.data.error || '未知错误'}`)
-  }
+    isPage.value = 0
+  } 
+}
+
+const goToHome = () => {
+  router.push('/')
 }
 
 const login = async () => {
   // 调用登录接口，获取返回值
   const res = await userLoginService(formModel.value.account, formModel.value.password)
-  console.log(res) // 打印返回值
   if (res.data.token) {
     ElMessage.success(res.data.message || '登录成功')
     userStore.setToken(res.data.token)
     userStore.setUserId(res.data.userId)
     userStore.setName(res.data.userName)
     goToHome()
-  } else {
-    ElMessage.error(`登录失败: ${res.data.message || '用户名或密码错误'}`)
-  }
+  } 
 }
 
-watch(isRegister, () => {
-  formModel.value = {
-    account: '',
-    password: '',
-    repassword: '',
+watch(isPage, (newValue) => {
+  if (newValue !== 1) {
+    formModel.value = {
+      account: '',
+      password: '',
+      repassword: '',
+    }
   }
 })
 </script>
@@ -83,7 +99,7 @@ watch(isRegister, () => {
   <el-row class="login-page">
     <el-col :span="8" class="bg"> </el-col>
     <el-col :span="8" class="form">
-      <el-form v-if="isRegister == 0" :model="formModel" :rules="rules" ref="form">
+      <el-form v-if="isPage == 0" :model="formModel" :rules="rules" ref="registerForm">
         <el-form-item><h1>登录</h1></el-form-item>
         <el-form-item prop="account">
           <el-input
@@ -97,24 +113,25 @@ watch(isRegister, () => {
             v-model="formModel.password"
             :prefix-icon="Lock"
             placeholder="请输入密码"
+            show-password
           ></el-input>
         </el-form-item>
         <el-form-item>
           <div class="flex">
             <el-checkbox value="Online activities" name="type"> 记住我 </el-checkbox>
-            <el-link type="primary" :underline="false" @click="isRegister = 2">忘记密码？</el-link>
+            <el-link type="primary" :underline="false" @click="isPage = 2">忘记密码？</el-link>
           </div>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" class="button" @click="login">登录</el-button>
         </el-form-item>
         <el-form-item>
-          <el-link type="info" :underline="false" @click="isRegister = 1">
+          <el-link type="info" :underline="false" @click="isPage = 1">
             注册<el-icon><Right /></el-icon>
           </el-link>
         </el-form-item>
       </el-form>
-      <el-form v-else-if="isRegister == 1" :model="formModel" :rules="rules" ref="form">
+      <el-form v-else-if="isPage == 1" :model="formModel" :rules="rules" ref="registerForm">
         <el-form-item><h1>注册</h1></el-form-item>
         <el-form-item prop="account"
           ><el-input
@@ -128,6 +145,7 @@ watch(isRegister, () => {
             v-model="formModel.password"
             :prefix-icon="Lock"
             placeholder="请输入密码"
+            show-password
           ></el-input
         ></el-form-item>
         <el-form-item prop="repassword"
@@ -135,6 +153,7 @@ watch(isRegister, () => {
             v-model="formModel.repassword"
             :prefix-icon="Lock"
             placeholder="请再次输入密码"
+            show-password
           ></el-input
         ></el-form-item>
         <el-form-item prop="captcha"> </el-form-item>
@@ -142,7 +161,15 @@ watch(isRegister, () => {
           <el-button type="primary" class="button" @click="register">注册</el-button>
         </el-form-item>
         <el-form-item>
-          <el-link type="info" :offset="2" :underline="false" @click="isRegister = 0"
+          <el-link type="info" :offset="2" :underline="false" @click="isPage = 0"
+            ><el-icon><Back /></el-icon>返回</el-link
+          >
+        </el-form-item>
+      </el-form>
+      <el-form v-else-if="isPage == 2" :model="formModel" :rules="rules" ref="form">
+        <el-form-item><h1>找回密码</h1></el-form-item>
+        <el-form-item>
+          <el-link type="info" :offset="2" :underline="false" @click="isPage = 0"
             ><el-icon><Back /></el-icon>返回</el-link
           >
         </el-form-item>
